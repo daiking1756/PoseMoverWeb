@@ -25,7 +25,11 @@
         </div>
       </div>
       <p class="meta" id="js-meta"></p>
+      <video id="js-remote-stream" autoplay playsinline width="490" height="653"></video>
+      <canvas id="output" width="490" height="653"></canvas>
     </div>
+
+
     <script src="https://cdn.webrtc.ecl.ntt.com/skyway-latest.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.11.7"></script>
@@ -34,8 +38,5 @@
     <script src="./key.js"></script>
     <script src="./script.js"></script>
 
-    <div class="container">
-        <canvas id="output" width="320" height="240"></canvas>
-      </div>
   </body>
 </html>

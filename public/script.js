@@ -7,6 +7,10 @@ const Peer = window.Peer;
   const closeTrigger = document.getElementById('js-close-trigger');
   const remoteVideo = document.getElementById('js-remote-stream');
   const remoteId = document.getElementById('js-remote-id');
+
+  const canvas = document.getElementById('output');
+  const ctx = canvas.getContext('2d');
+
   const meta = document.getElementById('js-meta');
   const sdkSrc = document.querySelector('script[src*=skyway]');
 
@@ -14,6 +18,10 @@ const Peer = window.Peer;
     UA: ${navigator.userAgent}
     SDK: ${sdkSrc ? sdkSrc.src : 'unknown'}
   `.trim();
+
+  // posenetモデル
+  let net = await posenet.load(0.75);
+  console.log(net);
 
   const localStream = await navigator.mediaDevices
     .getUserMedia({
@@ -80,4 +88,33 @@ const Peer = window.Peer;
   });
 
   peer.on('error', console.error);
+
+  detectPoseInRealTime(remoteVideo, net);
+
+  function detectPoseInRealTime(video, net) {
+    console.log('detectPoseInRealTime', video);
+
+    async function poseDetectionFrame() {
+        let poses = [];
+
+        const pose = await net.estimateSinglePose(video, 0.5, false, 16);
+        poses.push(pose);
+
+        ctx.clearRect(0, 0, 490, 653);
+        ctx.save();
+        ctx.drawImage(video, 0, 0, 490, 653);
+        ctx.restore();
+
+        poses.forEach(({score, keypoints}) => {
+            if (score >= 0.1) {
+                console.log('score', score);
+                console.log('keypoints', keypoints);
+               //drawKeypoints(keypoints, 0.1, ctx);
+            }
+        });
+        requestAnimationFrame(poseDetectionFrame);
+    }
+    poseDetectionFrame();
+  }
+
 })();
