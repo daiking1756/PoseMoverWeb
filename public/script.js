@@ -30,7 +30,7 @@ const Peer = window.Peer;
 
   const peer = (window.peer = new Peer("daiking1756panpopen", {
     // key: window.__SKYWAY_KEY__,
-    key: process.env.SKYWAY-APIKEY
+    key: process.env.SKYWAY-APIKEY,
     debug: 3,
   }));
 
