@@ -1,11 +1,15 @@
-let express = require('express');
-let app = express();
+const path = require('path');
+const express = require('express');
+const app = express();
 
-let server = app.listen(3000, function(){
-    console.log("Node.js is listening to PORT: " + server.address().port);
+app.set('port', process.env.PORT || 5050);
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.listen(app.get('port'), function(){
+    console.log("Node.js is listening to PORT: " + app.get('port'));
 });
 
-app.use(express.static('public'));
+
 
 app.get("/", function (request, response) {
   response.sendFile('index.html');

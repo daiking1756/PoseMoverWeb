@@ -7,10 +7,6 @@ const Peer = window.Peer;
   const closeTrigger = document.getElementById('js-close-trigger');
   const remoteVideo = document.getElementById('js-remote-stream');
   const remoteId = document.getElementById('js-remote-id');
-
-  const canvas = document.getElementById('output');
-  const ctx = canvas.getContext('2d');
-
   const meta = document.getElementById('js-meta');
   const sdkSrc = document.querySelector('script[src*=skyway]');
 
@@ -18,11 +14,6 @@ const Peer = window.Peer;
     UA: ${navigator.userAgent}
     SDK: ${sdkSrc ? sdkSrc.src : 'unknown'}
   `.trim();
-
-  // posenet モデル
-  let net = await posenet.load(0.75);
-  console.log(net);
-
 
   const localStream = await navigator.mediaDevices
     .getUserMedia({
@@ -89,21 +80,4 @@ const Peer = window.Peer;
   });
 
   peer.on('error', console.error);
-
-  detectPoseInRealTime(remoteVideo, net);
-
-  function detectPoseInRealTime(video, net) {
-      console.log('detectPoseInRealTime', video);
-
-      async function poseDetectionFrame() {
-          ctx.clearRect(0, 0, 320, 240);
-          ctx.save();
-          ctx.drawImage(video, 0, 0,320, 240);
-          ctx.restore();
-          // video映像をcanvasでアニメーション化
-          requestAnimationFrame(poseDetectionFrame);
-    }
-    poseDetectionFrame();
-
-  }
 })();
