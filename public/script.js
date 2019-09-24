@@ -28,18 +28,11 @@ const Peer = window.Peer;
   localVideo.playsInline = true;
   await localVideo.play().catch(console.error);
 
-  if(window.__SKYWAY_KEY__ != null) {
-    const peer = (window.peer = new Peer("daiking1756panpopen", {
-      key: window.__SKYWAY_KEY__,
-      debug: 3,
-    }));
-  } else {
-    const peer = (window.peer = new Peer("daiking1756panpopen", {
-      key: process.env.SKYWAY-APIKEY || window.__SKYWAY_KEY__,
-      debug: 3,
-    }));
+  const peer = (window.peer = new Peer("daiking1756panpopen", {
+    key: window.__SKYWAY_KEY__,
+    debug: 3,
+  }));
 
-  }
   // Register caller handler
   callTrigger.addEventListener('click', () => {
     // Note that you need to ensure the peer has connected to signaling server
