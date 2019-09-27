@@ -1,12 +1,12 @@
-// import {drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from './draw';
-
 const imageScaleFactor = 0.2;
 const outputStride = 16;
-const flipHorizontal = false;
+// const flipHorizontal = false;
 const stats = new Stats();
 const contentWidth = 800;
 const contentHeight = 600;
-
+const minPartConfidence = 0.2
+const color = 'aqua';
+const lineWidth = 2;
 bindPage();
 
 async function bindPage() {
@@ -63,16 +63,13 @@ function detectPoseInRealTime(video, net) {
         const pose = await net.estimateSinglePose(video, imageScaleFactor, flipHorizontal, outputStride);
         poses.push(pose);
 
-        if(pose['score'] >= 0.7){
-            console.log(pose);
-            window.location.href = 'https://youtu.be/x_U_FIXn9aE?t=19';
+        if(pose['score'] >= minPartConfidence){
+            console.log(pose.keypoints[0].position.x);
+            console.log(flipHorizontal);
+            // window.location.href = 'https://youtu.be/x_U_FIXn9aE?t=19';
         } else {
 
         }
-
-        // pose.forEach(function ( item ) {
-        //     console.log(item)
-        // });
 
         ctx.clearRect(0, 0, contentWidth,contentHeight);
 
@@ -82,10 +79,10 @@ function detectPoseInRealTime(video, net) {
         ctx.drawImage(video, 0, 0, contentWidth, contentHeight);
         ctx.restore();
 
+        // draw result
         poses.forEach(({ score, keypoints }) => {
-            // keypoints[9]には左手、keypoints[10]には右手の予測結果が格納されている
-            drawWristPoint(keypoints[9],ctx);
-            drawWristPoint(keypoints[10],ctx);
+            drawKeypoints(keypoints, minPartConfidence, ctx);
+            drawSkeleton(keypoints, minPartConfidence, ctx);
         });
 
         stats.end();
@@ -95,10 +92,49 @@ function detectPoseInRealTime(video, net) {
     poseDetectionFrame();
 }
 
-// 与えられたKeypointをcanvasに描画する
-function drawWristPoint(wrist,ctx){
+// ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+//              draw functions
+// ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+function toTuple({y, x}) {
+    return [y, x];
+}
+
+function drawPoint(ctx, y, x, r, color) {
     ctx.beginPath();
-    ctx.arc(wrist.position.x , wrist.position.y, 10, 0, 2 * Math.PI);
-    ctx.fillStyle = "red";
+    ctx.arc(x, y, r, 0, 2 * Math.PI);
+    ctx.fillStyle = color;
     ctx.fill();
+}
+
+function drawKeypoints(keypoints, minConfidence, ctx, scale = 1) {
+    for (let i = 0; i < keypoints.length; i++) {
+      const keypoint = keypoints[i];
+
+      if (keypoint.score < minConfidence) {
+        continue;
+      }
+
+      const {y, x} = keypoint.position;
+      drawPoint(ctx, y * scale, x * scale, 3, color);
+    }
+}
+
+function drawSegment([ay, ax], [by, bx], color, scale, ctx) {
+    ctx.beginPath();
+    ctx.moveTo(ax * scale, ay * scale);
+    ctx.lineTo(bx * scale, by * scale);
+    ctx.lineWidth = lineWidth;
+    ctx.strokeStyle = color;
+    ctx.stroke();
+}
+
+function drawSkeleton(keypoints, minConfidence, ctx, scale = 1) {
+    const adjacentKeyPoints = posenet.getAdjacentKeyPoints(keypoints, minConfidence);
+
+    adjacentKeyPoints.forEach((keypoints) => {
+      drawSegment(
+          toTuple(keypoints[0].position), toTuple(keypoints[1].position), color,
+          scale, ctx);
+    });
 }
