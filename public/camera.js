@@ -55,17 +55,23 @@ async function setupCamera() {
 function detectPoseInRealTime(video, net) {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    const flipHorizontal = true; // since images are being fed from a webcam
+    const flipPoseHorizontal = true; // since images are being fed from a webcam
 
     async function poseDetectionFrame() {
         stats.begin();
         let poses = [];
-        const pose = await net.estimateSinglePose(video, imageScaleFactor, flipHorizontal, outputStride);
-        poses.push(pose);
+        // const pose = await net.estimateSinglePose(video, imageScaleFactor, flipHorizontal, outputStride);
+        const pose = await net.estimatePoses(video, {
+            flipHorizontal: flipPoseHorizontal,
+            decodingMethod: 'single-person'
+          });
+        poses.push(pose[0]);
+
+        console.log(`nose x: ${pose[0].keypoints[0].position.x}`);
 
         if(pose['score'] >= minPartConfidence){
-            console.log(pose.keypoints[0].position.x);
-            console.log(flipHorizontal);
+            // console.log(pose.keypoints[0].position.x);
+            // console.log(flipHorizontal);
             // window.location.href = 'https://youtu.be/x_U_FIXn9aE?t=19';
         } else {
 
@@ -90,51 +96,4 @@ function detectPoseInRealTime(video, net) {
         requestAnimationFrame(poseDetectionFrame);
     }
     poseDetectionFrame();
-}
-
-// ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-//              draw functions
-// ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-
-function toTuple({y, x}) {
-    return [y, x];
-}
-
-function drawPoint(ctx, y, x, r, color) {
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, 2 * Math.PI);
-    ctx.fillStyle = color;
-    ctx.fill();
-}
-
-function drawKeypoints(keypoints, minConfidence, ctx, scale = 1) {
-    for (let i = 0; i < keypoints.length; i++) {
-      const keypoint = keypoints[i];
-
-      if (keypoint.score < minConfidence) {
-        continue;
-      }
-
-      const {y, x} = keypoint.position;
-      drawPoint(ctx, y * scale, x * scale, 3, color);
-    }
-}
-
-function drawSegment([ay, ax], [by, bx], color, scale, ctx) {
-    ctx.beginPath();
-    ctx.moveTo(ax * scale, ay * scale);
-    ctx.lineTo(bx * scale, by * scale);
-    ctx.lineWidth = lineWidth;
-    ctx.strokeStyle = color;
-    ctx.stroke();
-}
-
-function drawSkeleton(keypoints, minConfidence, ctx, scale = 1) {
-    const adjacentKeyPoints = posenet.getAdjacentKeyPoints(keypoints, minConfidence);
-
-    adjacentKeyPoints.forEach((keypoints) => {
-      drawSegment(
-          toTuple(keypoints[0].position), toTuple(keypoints[1].position), color,
-          scale, ctx);
-    });
 }
