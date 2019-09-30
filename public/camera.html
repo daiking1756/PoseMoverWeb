@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
-    <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
-  </head>
-  <body>
-    <!-- <video id="video" width="800px" height="600px" autoplay="1" style="position:absolute;"></video> -->
-    <video id="video" width="800px" height="600px" playsinline="" style="
-      -moz-transform: scaleX(-1);
-      -o-transform: scaleX(-1);
-      -webkit-transform: scaleX(-1);
-      transform: scaleX(-1);
-      display: none;
-    ">
-    </video>
-    <canvas id="canvas" width="800px" height="600px" style="position:absolute;"></canvas>
-</body>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.js"></script>
-  <script src="draw.js"></script>
-  <script src="calc_pose_angle.js"></script>
-  <script src="camera.js"></script>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+        <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+                crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="container">
+            <video id="video" width="800px" height="600px" autoplay="1" style="position:absolute;"></video>
+            <canvas id="canvas" width="800px" height="600px" style="position:absolute;"></canvas>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.js"></script>
+        <script src="draw.js"></script>
+        <script src="calc_pose_angle.js"></script>
+        <script src="camera.js"></script>
+    </body>
+
 </html>

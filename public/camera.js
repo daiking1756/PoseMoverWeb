@@ -2,11 +2,18 @@ const imageScaleFactor = 0.2;
 const outputStride = 16;
 // const flipHorizontal = false;
 const stats = new Stats();
-const contentWidth = 800;
-const contentHeight = 600;
+const canvas = document.getElementById('canvas');
+// const contentWidth = 800;
+// const contentHeight = 600;
+const contentWidth = canvas.width;
+const contentHeight = canvas.height;
 const minPartConfidence = 0.2
 const color = 'aqua';
 const lineWidth = 2;
+const maxAllowError = 150;
+const minAllowScore = 0.5;
+
+console.log(contentHeight);
 
 let correct_pose;
 $.get("/pose_json",
@@ -16,8 +23,6 @@ $.get("/pose_json",
 );
 
 bindPage();
-
-
 
 async function bindPage() {
     const net = await posenet.load(); // posenetの呼び出し
@@ -78,10 +83,9 @@ function detectPoseInRealTime(video, net) {
         });
         poses.push(pose[0]);
 
-        console.group('Angle Error')
         const error = calcAngleError(correct_pose, pose[0]);
-        console.log(error);
-        if(error <= 120){
+        // console.log(error);
+        if(error <= maxAllowError && pose[0].score >= minAllowScore){
             const audioElem = new Audio();
             audioElem.src = "sounds/correct_sound.mp3";
             audioElem.play();
@@ -89,18 +93,6 @@ function detectPoseInRealTime(video, net) {
                 window.location.href = 'https://youtu.be/9_ifx-Dmv9g?t=73';
             }, 3000)
             await sleep(4000)
-            // window.location.href = 'https://youtu.be/9_ifx-Dmv9g?t=73';
-        }
-        // console.log(calcKeypointsAngle(correct_pose.keypoints, 6, 8));
-        // console.log(calcKeypointsAngle(pose[0].keypoints, 6, 8));
-        console.groupEnd();
-
-        if(pose['score'] >= minPartConfidence){
-            // console.log(pose.keypoints[0].position.x);
-            // console.log(flipHorizontal);
-            // window.location.href = 'https://youtu.be/x_U_FIXn9aE?t=19';
-        } else {
-
         }
 
         ctx.clearRect(0, 0, contentWidth,contentHeight);
