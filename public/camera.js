@@ -82,7 +82,14 @@ function detectPoseInRealTime(video, net) {
         const error = calcAngleError(correct_pose, pose[0]);
         console.log(error);
         if(error <= 120){
-            window.location.href = 'https://youtu.be/9_ifx-Dmv9g?t=73';
+            const audioElem = new Audio();
+            audioElem.src = "sounds/correct_sound.mp3";
+            audioElem.play();
+            setTimeout(function(){
+                window.location.href = 'https://youtu.be/9_ifx-Dmv9g?t=73';
+            }, 3000)
+            await sleep(4000)
+            // window.location.href = 'https://youtu.be/9_ifx-Dmv9g?t=73';
         }
         // console.log(calcKeypointsAngle(correct_pose.keypoints, 6, 8));
         // console.log(calcKeypointsAngle(pose[0].keypoints, 6, 8));
@@ -116,3 +123,11 @@ function detectPoseInRealTime(video, net) {
     }
     poseDetectionFrame();
 }
+
+function sleep(msec) {
+    return new Promise(function(resolve) {
+
+       setTimeout(function() {resolve()}, msec);
+
+    })
+ }
