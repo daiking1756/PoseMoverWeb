@@ -48,7 +48,7 @@ async function multiplePosesDetection(){
 
     $('#get_btn').click(function(){
         console.log(correct_pose);
-        console.log(calcKeypointsAngle(correct_pose.keypoints, 6, 8));
-        console.log(calcKeypointsAngle(correct_pose.keypoints, 8, 10));
+        // console.log(calcKeypointsAngle(correct_pose.keypoints, 6, 8));
+        // console.log(calcKeypointsAngle(correct_pose.keypoints, 8, 10));
     });
 }

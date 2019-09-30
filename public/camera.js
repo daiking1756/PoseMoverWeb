@@ -92,7 +92,10 @@ function detectPoseInRealTime(video, net) {
             setTimeout(function(){
                 window.location.href = 'https://youtu.be/9_ifx-Dmv9g?t=73';
             }, 3000)
-            await sleep(4000)
+            await sleep(1000)
+            $('#exampleModal').modal();
+            await sleep(3000)
+
         }
 
         ctx.clearRect(0, 0, contentWidth,contentHeight);
