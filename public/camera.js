@@ -56,6 +56,7 @@ function detectPoseInRealTime(video, net) {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     const flipPoseHorizontal = true; // since images are being fed from a webcam
+    // const flipPoseHorizontal = false;
 
     async function poseDetectionFrame() {
         stats.begin();
@@ -67,7 +68,7 @@ function detectPoseInRealTime(video, net) {
           });
         poses.push(pose[0]);
 
-        console.log(`nose x: ${pose[0].keypoints[0].position.x}`);
+        console.log(`right wrist x: ${pose[0].keypoints[10].position.x}`);
 
         if(pose['score'] >= minPartConfidence){
             // console.log(pose.keypoints[0].position.x);

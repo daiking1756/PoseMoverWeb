@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+    <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <canvas id="canvas" style="position:absolute;"></canvas>
+    <img id="img" src="images/voice1.png">
+
+    <form id="form" action="/post_pose" method="POST">
+        <label>What number of pose from the left :</label>
+        <input id="num_of_pose" type="text" required>
+        <input id="pose" name="pose" type="hidden" >
+        <input id="image_name" name="image_name" type="hidden" >
+        <br>
+        <button id="btn" type="button">REGISTRATION POSE</button>
+    </form>
+    <button id="get_btn" type="button">GET JSON</button>
+
+</body>
+    <script src="draw.js"></script>
+    <script src="image.js"></script>
+    <script src="post_pose.js"></script>
+</html>

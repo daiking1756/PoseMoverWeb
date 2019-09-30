@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+    <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
+  </head>
+  <body>
+    <!-- <video id="video" width="800px" height="600px" autoplay="1" style="position:absolute;"></video> -->
+    <video id="video" width="800px" height="600px" playsinline="" style="
+      -moz-transform: scaleX(-1);
+      -o-transform: scaleX(-1);
+      -webkit-transform: scaleX(-1);
+      transform: scaleX(-1);
+      display: none;
+    ">
+    </video>
+    <canvas id="canvas" width="800px" height="600px" style="position:absolute;"></canvas>
+</body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.js"></script>
+  <script src="draw.js"></script>
+  <script src="camera.js"></script>
+</html>
