@@ -7,7 +7,17 @@ const contentHeight = 600;
 const minPartConfidence = 0.2
 const color = 'aqua';
 const lineWidth = 2;
+
+let correct_pose;
+$.get("/pose_json",
+    function(data){
+        correct_pose = JSON.parse(data);
+    }
+);
+
 bindPage();
+
+
 
 async function bindPage() {
     const net = await posenet.load(); // posenetの呼び出し
@@ -55,8 +65,8 @@ async function setupCamera() {
 function detectPoseInRealTime(video, net) {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    const flipPoseHorizontal = true; // since images are being fed from a webcam
-    // const flipPoseHorizontal = false;
+    // const flipPoseHorizontal = true; // since images are being fed from a webcam
+    const flipPoseHorizontal = false;
 
     async function poseDetectionFrame() {
         stats.begin();
@@ -65,10 +75,18 @@ function detectPoseInRealTime(video, net) {
         const pose = await net.estimatePoses(video, {
             flipHorizontal: flipPoseHorizontal,
             decodingMethod: 'single-person'
-          });
+        });
         poses.push(pose[0]);
 
-        console.log(`right wrist x: ${pose[0].keypoints[10].position.x}`);
+        console.group('Angle Error')
+        const error = calcAngleError(correct_pose, pose[0]);
+        console.log(error);
+        if(error <= 120){
+            window.location.href = 'https://youtu.be/9_ifx-Dmv9g?t=73';
+        }
+        // console.log(calcKeypointsAngle(correct_pose.keypoints, 6, 8));
+        // console.log(calcKeypointsAngle(pose[0].keypoints, 6, 8));
+        console.groupEnd();
 
         if(pose['score'] >= minPartConfidence){
             // console.log(pose.keypoints[0].position.x);
@@ -81,8 +99,8 @@ function detectPoseInRealTime(video, net) {
         ctx.clearRect(0, 0, contentWidth,contentHeight);
 
         ctx.save();
-        ctx.scale(-1, 1);
-        ctx.translate(-contentWidth, 0);
+        // ctx.scale(-1, 1);
+        // ctx.translate(-contentWidth, 0);
         ctx.drawImage(video, 0, 0, contentWidth, contentHeight);
         ctx.restore();
 
