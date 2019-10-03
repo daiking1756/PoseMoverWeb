@@ -22,15 +22,15 @@
             <!-- loading spinner -->
             <div class="circle"></div>
 
-            <video id="video" width="800px" height="600px" autoplay="1" style="position:absolute;"></video>
-            <canvas id="canvas" width="800px" height="600px" style="position:absolute;"></canvas>
+            <video id="video" autoplay="1" style="position:absolute;"></video>
+            <canvas id="canvas" style="position:absolute;"></canvas>
 
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="correctImageModal" tabindex="-1" role="dialog" aria-labelledby="correctImageModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Correct image</h5>
+                        <h5 class="modal-title" id="correctImageModalLabel">Correct image</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -45,12 +45,17 @@
                 </div>
             </div>
 
+            <div id="video_player"></div>
         </div>
+
+        <script src="https://www.youtube.com/iframe_api"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.js"></script>
         <script src="/js/draw.js"></script>
         <script src="/js/calc_pose_angle.js"></script>
         <script src="/js/camera.js"></script>
+        <script src="/js/youtube_control.js"></script>
     </body>
 
 </html>
+

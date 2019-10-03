@@ -1,4 +1,12 @@
-/* video, canvas {
-    width: 800px;
-    height: 600px;
-} */
+video, canvas {
+    width: 400px;
+    height: 300px;
+}
+.container{
+    position: relative;
+    /* background-color: aqua; */
+}
+#video_player{
+    position: absolute;
+    top: 320px;
+}

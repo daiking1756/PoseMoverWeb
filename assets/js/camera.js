@@ -14,6 +14,8 @@ const maxAllowError = 100;
 const minAllowScore = 0.5;
 
 let correct_poses;
+let current_video_id = "v-wHFJbW2nw"; // PoseMover説明用ビデオのvideoId
+
 $.get("/correct_poses",
     function(data){
         correct_poses = data;
@@ -85,7 +87,6 @@ function detectPoseInRealTime(video, net) {
 
         for(let index in correct_poses){
             const error = calcAngleError(correct_poses[index], pose[0]);
-            // console.log(error);
             if(error <= maxAllowError && pose[0].score >= minAllowScore){
                 const audioElem = new Audio();
                 audioElem.src = "/sounds/correct_sound.mp3";
@@ -93,11 +94,19 @@ function detectPoseInRealTime(video, net) {
                 await sleep(500);
 
                 document.getElementById('img').src = `/images/${correct_poses[index].image_name}`;
-                $('#exampleModal').modal();
+                $('#correctImageModal').modal();
 
                 await sleep(2000);
-                window.location.href = correct_poses[index].video_url;
-                await sleep(1000);
+                const videoId = correct_poses[index].video_url.split('/')[3].split('?')[0];
+                const startSeconds = Number(correct_poses[index].video_url.split('?')[1].replace("t=", ""));
+                closeModal();
+                if(current_video_id == videoId){
+                    player.seekTo(startSeconds);
+                } else {
+                    player.loadVideoById(videoId, startSeconds);
+                    current_video_id = videoId;
+                }
+                await sleep(2000);
             }
         }
 
@@ -128,4 +137,10 @@ function sleep(msec) {
        setTimeout(function() {resolve()}, msec);
 
     })
+}
+
+function closeModal(){
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+    $('#correctImageModal').modal('hide');
 }
