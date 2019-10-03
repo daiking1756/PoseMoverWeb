@@ -20,7 +20,7 @@ app.listen(app.get('port'), function(){
 
 
 app.get("/", function (request, response) {
-    response.sendFile('html/index.html');
+    response.sendFile(__dirname + '/assets/html/index.html');
 });
 
 app.get("/correct_poses", function (request, response) {

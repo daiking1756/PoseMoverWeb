@@ -1,7 +1,8 @@
-video, canvas {
+/* cssでwidthとheightを調整すると骨格検出がされなくなる */
+/* video, canvas {
     width: 400px;
     height: 300px;
-}
+} */
 .container{
     position: relative;
     /* background-color: aqua; */
