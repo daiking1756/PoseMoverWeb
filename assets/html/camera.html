@@ -5,20 +5,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="stylesheet" type="text/css" href="/css/loader.css">
         <script src="https://unpkg.com/@tensorflow/tfjs"></script>
         <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-                crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <title>Pose Mover - Camera</title>
     </head>
     <body>
         <div class="container">
+            <!-- loading spinner -->
+            <div class="circle"></div>
+
             <video id="video" width="800px" height="600px" autoplay="1" style="position:absolute;"></video>
             <canvas id="canvas" width="800px" height="600px" style="position:absolute;"></canvas>
 
@@ -33,7 +36,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <img id="img" src="images/voice1.png">
+                        <img id="img" src="/images/voice1.png">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -45,9 +48,9 @@
         </div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.js"></script>
-        <script src="draw.js"></script>
-        <script src="calc_pose_angle.js"></script>
-        <script src="camera.js"></script>
+        <script src="/js/draw.js"></script>
+        <script src="/js/calc_pose_angle.js"></script>
+        <script src="/js/camera.js"></script>
     </body>
 
 </html>

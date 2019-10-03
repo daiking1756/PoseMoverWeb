@@ -13,8 +13,6 @@ const lineWidth = 2;
 const maxAllowError = 150;
 const minAllowScore = 0.5;
 
-console.log(contentHeight);
-
 let correct_pose;
 $.get("/pose_json",
     function(data){
@@ -29,6 +27,7 @@ async function bindPage() {
     let video;
     try {
         video = await loadVideo(); // video属性をロード
+        $('.circle').toggle();
     } catch(e) {
         console.error(e);
         return;
