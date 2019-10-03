@@ -1,11 +1,12 @@
 const minPartConfidence = 0.2;
 const color = 'aqua';
 const lineWidth = 2;
-let correct_pose;
+let correct_poses;
 
-$.get("/pose_json",
+$.get("/correct_poses",
     function(data){
-        correct_pose = JSON.parse(data);
+        correct_poses = data;
+        // correct_poses = JSON.parse(data);
     }
 );
 
@@ -47,8 +48,6 @@ async function multiplePosesDetection(){
     };
 
     $('#get_btn').click(function(){
-        console.log(correct_pose);
-        // console.log(calcKeypointsAngle(correct_pose.keypoints, 6, 8));
-        // console.log(calcKeypointsAngle(correct_pose.keypoints, 8, 10));
+        console.log(correct_poses);
     });
 }

@@ -8,7 +8,6 @@ const app = express();
 
 app.set('port', process.env.PORT || 5050);
 app.use(express.static(path.join(__dirname, 'assets')));
-console.log(path.join(__dirname, 'assets'));
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -24,15 +23,26 @@ app.get("/", function (request, response) {
     response.sendFile('html/index.html');
 });
 
-app.get("/pose_json", function (request, response) {
-    const poseJsonObject = JSON.parse(fs.readFileSync('assets/correct_poses/test.json', 'utf8'));
-    response.send(poseJsonObject);
+app.get("/correct_poses", function (request, response) {
+    let poseJsonObjects = []
+
+    let poseJsonObject1 = JSON.parse(fs.readFileSync('assets/correct_poses/voice1.json', 'utf8'));
+    let poseJsonObject2 = JSON.parse(fs.readFileSync('assets/correct_poses/voice2.json', 'utf8'));
+
+    poseJsonObject1 = JSON.parse(poseJsonObject1, 'utf8');
+    poseJsonObject2 = JSON.parse(poseJsonObject2, 'utf8');
+
+    // 配列に追加
+    poseJsonObjects.push(poseJsonObject1);
+    poseJsonObjects.push(poseJsonObject2);
+
+    response.send(poseJsonObjects);
 });
 
 
 app.post("/post_pose", function (request, response) {
     pose = request.body.pose;
-    image_name = request.body.image_name;
+    image_name = request.body.image_name.split('.')[0];
     console.log("POST is received");
     response.send("POST is sended!");
     fs.writeFileSync(`assets/correct_poses/${image_name}.json`, JSON.stringify(pose, null, '    '));

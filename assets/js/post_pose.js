@@ -15,11 +15,13 @@ function postPose(poses) {
     console.log(poses);
     console.log(poses[numOfPose-1]);
 
-    input_pose.value = JSON.stringify(poses[numOfPose-1], null, '    ')
+    // 正解ポーズにimage_nameを追加、画像名を設定
+    const image_name = image.src.split('/')[image.src.split('/').length - 1];
 
-    // 画像名を設定
-    const image_name = image.src.split('/')[image.src.split('/').length - 1].split('.')[0]
+    poses[numOfPose-1].image_name = image_name;
     input_image_name.value = image_name;
+
+    input_pose.value = JSON.stringify(poses[numOfPose-1], null, '    ');
 
     // form.submit();
     btn_submit.click();

@@ -10,13 +10,14 @@ const contentHeight = canvas.height;
 const minPartConfidence = 0.2
 const color = 'aqua';
 const lineWidth = 2;
-const maxAllowError = 150;
+const maxAllowError = 100;
 const minAllowScore = 0.5;
 
-let correct_pose;
-$.get("/pose_json",
+let correct_poses;
+$.get("/correct_poses",
     function(data){
-        correct_pose = JSON.parse(data);
+        correct_poses = data;
+        // correct_poses = JSON.parse(data);
     }
 );
 
@@ -82,19 +83,22 @@ function detectPoseInRealTime(video, net) {
         });
         poses.push(pose[0]);
 
-        const error = calcAngleError(correct_pose, pose[0]);
-        // console.log(error);
-        if(error <= maxAllowError && pose[0].score >= minAllowScore){
-            const audioElem = new Audio();
-            audioElem.src = "sounds/correct_sound.mp3";
-            audioElem.play();
-            setTimeout(function(){
-                window.location.href = 'https://youtu.be/9_ifx-Dmv9g?t=73';
-            }, 3000)
-            await sleep(1000)
-            $('#exampleModal').modal();
-            await sleep(3000)
+        for(let index in correct_poses){
+            const error = calcAngleError(correct_poses[index], pose[0]);
+            // console.log(error);
+            if(error <= maxAllowError && pose[0].score >= minAllowScore){
+                const audioElem = new Audio();
+                audioElem.src = "/sounds/correct_sound.mp3";
+                audioElem.play();
+                await sleep(500);
 
+                document.getElementById('img').src = `/images/${correct_poses[index].image_name}`;
+                $('#exampleModal').modal();
+
+                await sleep(2000);
+                window.location.href = correct_poses[index].video_url;
+                await sleep(1000);
+            }
         }
 
         ctx.clearRect(0, 0, contentWidth,contentHeight);
@@ -124,4 +128,4 @@ function sleep(msec) {
        setTimeout(function() {resolve()}, msec);
 
     })
- }
+}
