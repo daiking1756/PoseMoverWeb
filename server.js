@@ -24,21 +24,26 @@ app.get("/", function (request, response) {
 });
 
 app.get("/correct_poses", function (request, response) {
-    let poseJsonObjects = []
+    const path = process.cwd() + '/assets/correct_poses';
+    const filenames = fs.readdirSync(path);
 
-    let poseJsonObject1 = JSON.parse(fs.readFileSync('assets/correct_poses/voice1.json', 'utf8'));
-    let poseJsonObject2 = JSON.parse(fs.readFileSync('assets/correct_poses/voice2.json', 'utf8'));
+    const poseJsonObjects = []
 
-    poseJsonObject1 = JSON.parse(poseJsonObject1, 'utf8');
-    poseJsonObject2 = JSON.parse(poseJsonObject2, 'utf8');
-
-    // 配列に追加
-    poseJsonObjects.push(poseJsonObject1);
-    poseJsonObjects.push(poseJsonObject2);
+    filenames.forEach(filename => {
+        let poseJsonObject = JSON.parse(fs.readFileSync(`assets/correct_poses/${filename}`, 'utf8'));
+        poseJsonObject = JSON.parse(poseJsonObject, 'utf8');
+        poseJsonObjects.push(poseJsonObject);
+    });
 
     response.send(poseJsonObjects);
 });
 
+app.get("/images", function (request, response) {
+    const path = process.cwd() + '/assets/images';
+    const filenames = fs.readdirSync(path);
+
+    response.send(filenames);
+});
 
 app.post("/post_pose", function (request, response) {
     pose = request.body.pose;
