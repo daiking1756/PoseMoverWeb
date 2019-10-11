@@ -104,7 +104,7 @@ function detectPoseInRealTime(video, net) {
                 await sleep(500);
 
                 $('#correctImageModal').modal();
-                await sleep(500);
+                await sleep(1500);
 
                 closeModal();
                 if(current_video_id == videoId){
@@ -113,7 +113,7 @@ function detectPoseInRealTime(video, net) {
                     player.loadVideoById(videoId, startSeconds);
                     current_video_id = videoId;
                 }
-                await sleep(500);
+                await sleep(1500);
             }
         }
 
