@@ -10,8 +10,8 @@ const contentHeight = canvas.height;
 const minPartConfidence = 0.2
 const color = 'aqua';
 const lineWidth = 2;
-const maxAllowError = 100;
-const minAllowScore = 0.5;
+const maxAllowError = 20;
+const minAllowScore = 0.8;
 
 let correct_poses;
 let current_video_id = "v-wHFJbW2nw"; // PoseMover説明用ビデオのvideoId
@@ -87,18 +87,25 @@ function detectPoseInRealTime(video, net) {
 
         for(let index in correct_poses){
             const error = calcAngleError(correct_poses[index], pose[0]);
+
+            console.group("condition")
+            console.log(`error :${error}`)
+            console.log(`score :${pose[0].score}`)
+            console.groupEnd()
+
             if(error <= maxAllowError && pose[0].score >= minAllowScore){
+                const videoId = correct_poses[index].video_url.split('/')[3].split('?')[0];
+                const startSeconds = Number(correct_poses[index].video_url.split('?')[1].replace("t=", ""));
+                document.getElementById('img').src = `/images/${correct_poses[index].image_name}`;
                 const audioElem = new Audio();
                 audioElem.src = "/sounds/correct_sound.mp3";
+
                 audioElem.play();
                 await sleep(500);
 
-                document.getElementById('img').src = `/images/${correct_poses[index].image_name}`;
                 $('#correctImageModal').modal();
+                await sleep(500);
 
-                await sleep(2000);
-                const videoId = correct_poses[index].video_url.split('/')[3].split('?')[0];
-                const startSeconds = Number(correct_poses[index].video_url.split('?')[1].replace("t=", ""));
                 closeModal();
                 if(current_video_id == videoId){
                     player.seekTo(startSeconds);
@@ -106,7 +113,7 @@ function detectPoseInRealTime(video, net) {
                     player.loadVideoById(videoId, startSeconds);
                     current_video_id = videoId;
                 }
-                await sleep(2000);
+                await sleep(500);
             }
         }
 

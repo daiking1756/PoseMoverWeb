@@ -11,12 +11,14 @@ function calcAngleError(correct_pose, user_pose){
     error += calcKeypointAngleError(correct_pose, user_pose, 8, 10);
 
     // // Hip - Knee
-    // error += calcKeypointAngleError(correct_pose, user_pose, 11, 13);
-    // error += calcKeypointAngleError(correct_pose, user_pose, 12, 14);
+    error += calcKeypointAngleError(correct_pose, user_pose, 11, 13);
+    error += calcKeypointAngleError(correct_pose, user_pose, 12, 14);
 
     // // Knee - Ankle
-    // error += calcKeypointAngleError(correct_pose, user_pose, 13, 15);
-    // error += calcKeypointAngleError(correct_pose, user_pose, 14, 16);
+    error += calcKeypointAngleError(correct_pose, user_pose, 13, 15);
+    error += calcKeypointAngleError(correct_pose, user_pose, 14, 16);
+
+    error /= 8;
 
     return error
 }
