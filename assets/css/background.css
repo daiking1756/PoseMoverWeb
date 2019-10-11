@@ -1,0 +1,13 @@
+body{
+    background-image: url("/background_image/perfume_silhouette_gray.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+
+    /* -moz-box-sizing: border-box; */
+    /* box-sizing: border-box; */
+    width: 100%;
+    height: 377px;
+    /* padding-top: 72.8%; */
+}
