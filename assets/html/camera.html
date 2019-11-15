@@ -8,20 +8,31 @@
         <link rel="stylesheet" type="text/css" href="/css/background.css">
         <link rel="stylesheet" type="text/css" href="/css/camera.css">
         <link rel="stylesheet" type="text/css" href="/css/loader.css">
+        <link rel="stylesheet" type="text/css" href="/css/particles_animation.css">
         <script src="https://unpkg.com/@tensorflow/tfjs"></script>
         <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.2/particles.min.js"></script>
+
 
         <title>Pose Mover - Camera</title>
     </head>
     <body>
+        <!-- particle -->
+        <canvas class="background"></canvas>
+
         <div class="container">
             <!-- loading spinner -->
             <div class="circle"></div>
+            <div id="mirror_checkbox" class="checkbox">
+                <label><input type="checkbox" value="">MIRROR</label>
+            </div>
+            <div id="dancing_checkbox" class="checkbox">
+                <label><input type="checkbox" value="">DANCING</label>
+            </div>
 
             <video id="video" width="400px" height="300px" autoplay="1" style="position:absolute;"></video>
             <canvas id="canvas" width="400px" height="300px" style="position:absolute;"></canvas>
@@ -49,6 +60,8 @@
             <div id="video_player"></div>
         </div>
 
+
+        <script src="/js/particles_animation.js"></script>
         <script src="https://www.youtube.com/iframe_api"></script>
         <script src="/js/youtube_control.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.js"></script>
