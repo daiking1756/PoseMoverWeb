@@ -4,8 +4,8 @@ function onYouTubeIframeAPIReady() {
     player = new YT.Player('video_player', {
     height: '360',
     width: '640',
-    videoId: 'v-wHFJbW2nw',
-
+    videoId: 'z2hGG3WXAW0',
+    start: 35,
     events: {
         'onReady': onPlayerReady,
         // 'onStateChange': onPlayerStateChange
@@ -22,6 +22,7 @@ function onPlayerReady(event) {
 //    The function indicates that when playing a video (state=1),
 //    the player should play for six seconds and then stop.
 let done = false;
+// player.seekTo(35);
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PLAYING && !done) {
     setTimeout(stopVideo, 6000);

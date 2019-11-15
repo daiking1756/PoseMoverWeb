@@ -11,3 +11,17 @@
     position: absolute;
     top: 320px;
 }
+.checkbox{
+    font-size: xx-large;
+    position: fixed;
+    right: 10%;
+    background-color: white;
+    border: 0.1px solid #000000;
+    padding-block: 10px;
+}
+#mirror_checkbox{
+    top: 50px;
+}
+#dancing_checkbox{
+    top: 100px;
+}
