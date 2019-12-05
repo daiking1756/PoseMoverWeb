@@ -1,6 +1,6 @@
 const minPartConfidence = 0.2;
 const color = 'aqua';
-const lineWidth = 2;
+const lineWidth = 3;
 let correct_poses;
 
 $.get("/correct_poses",
