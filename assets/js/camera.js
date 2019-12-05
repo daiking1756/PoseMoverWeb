@@ -81,7 +81,8 @@ function detectPoseInRealTime(video, net) {
         // const pose = await net.estimateSinglePose(video, imageScaleFactor, flipHorizontal, outputStride);
         const pose = await net.estimatePoses(video, {
             flipHorizontal: flipPoseHorizontal,
-            decodingMethod: 'single-person'
+            decodingMethod: 'single-person',
+            maxDetections: 1
         });
         poses.push(pose[0]);
 
